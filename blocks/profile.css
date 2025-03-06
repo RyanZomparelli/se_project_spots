@@ -30,7 +30,7 @@
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   max-width: 420px;
-  word-break: break-all;
+  word-break: keep-all;
 }
 
 .profile__description {
@@ -70,4 +70,31 @@
 
 .profile__edit-logo {
   color: #212121;
+}
+
+@media screen and (max-width: 630px) {
+  .profile {
+    max-width: 288px;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .profile__image {
+    width: 80px;
+    height: 80px;
+  }
+
+  .profile__content {
+    align-items: center;
+  }
+
+  .profile__name {
+    font-size: 20px;
+    word-break: break-all;
+  }
+
+  .profile__description {
+    margin-bottom: 20px;
+    word-break: break-all;
+  }
 }
