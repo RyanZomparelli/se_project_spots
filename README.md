@@ -1,4 +1,9 @@
-# Project 3: Spots
+# Spots
+A photo-sharing social media web app.
+
+**Check out Spots** [here](https://ryanzomparelli.github.io/se_project_spots/)
+
+**Watch a brief video overview** [here](https://www.loom.com/share/a93d77b0c8d844a7bec659981f3fa868)
 
 ### Overview  
 
@@ -8,7 +13,13 @@
   
 **Intro**
   
-This project is made so all the elements are displayed correctly on popular screen sizes. We recommend investing more time in completing this project, since it's more difficult than previous ones.  
+This project is made so all the elements are displayed correctly on popular screen sizes. Some of the project features are:
+
+- Semantic HTML5
+- Flexbox
+- Grid
+- Media queries
+- Flat BEM file structure
   
 **Figma**  
   
@@ -16,6 +27,6 @@ This project is made so all the elements are displayed correctly on popular scre
   
 **Images**  
   
-The way you'll do this at work is by exporting images directly from Figma — we recommend doing that to practice more. Don't forget to optimize them [here](https://tinypng.com/), so your project loads faster. 
-  
-Good luck and have fun!
+![Spots app 1440](./images/spots_demo/spots_1440.png)
+
+![Spots mobile view](./images/spots_demo/spots_mobile.png)
