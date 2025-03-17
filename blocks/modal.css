@@ -1,0 +1,140 @@
+.modal {
+  visibility: hidden;
+  background-color: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  padding: 16px;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal_opened {
+  visibility: visible;
+}
+
+.modal__container {
+  background-color: rgba(255, 255, 255, 1);
+  max-width: 730px;
+  width: 100%;
+  border-radius: 8px;
+  padding: 32px 50px;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.modal__button-close {
+  background-image: url(../images/close-icon.svg);
+  background-color: rgba(255, 255, 255, 1);
+  opacity: 0.4;
+  position: absolute;
+  top: 32px;
+  right: 50px;
+  border: none;
+  width: 40px;
+  height: 40px;
+  margin: 0;
+  padding: 0;
+  transition: 0.2s ease-out;
+  cursor: pointer;
+}
+
+.modal__button-close:hover {
+  opacity: 1;
+  transition: 0.2s ease-in;
+}
+
+.modal__title {
+  color: rgba(33, 33, 33, 1);
+  font-family: Poppins;
+  font-weight: 500;
+  font-size: 32px;
+  line-height: 1;
+  margin: 0 0 36px;
+}
+
+.modal__form {
+  display: flex;
+  flex-direction: column;
+}
+
+.modal__label {
+  color: rgba(33, 33, 33, 0.7);
+  font-family: Poppins;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.modal__input {
+  color: rgba(33, 33, 33, 1);
+  font-family: Poppins;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 1;
+  margin: 0 0 32px;
+  padding: 16px 0 16px 12px;
+  border: 1px solid rgba(33, 33, 33, 0.4);
+  border-radius: 8px;
+  transition: 0.3s ease-out;
+  cursor: pointer;
+}
+
+.modal__input:hover {
+  border: 1px solid rgba(33, 33, 33, 1);
+  transition: 0.3s ease-in;
+}
+
+.modal__input::placeholder {
+  color: rgba(33, 33, 33, 0.3);
+}
+
+.modal__button-submit {
+  background-color: rgba(33, 33, 33, 1);
+  color: rgba(252, 245, 229, 1);
+  border-radius: 8px;
+  width: 156px;
+  height: 52px;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  transition: 0.2s ease-out;
+}
+
+.modal__button-submit:hover {
+  opacity: 0.8;
+  transition: 0.2s ease-in;
+}
+
+@media screen and (max-width: 630px) {
+  .modal__container {
+    width: 300px;
+    padding: 12px;
+  }
+
+  .modal__button-close {
+    top: 12px;
+    right: 12px;
+  }
+
+  .modal__title {
+    padding: 10px 0;
+    margin-bottom: 24px;
+    font-size: 20px;
+  }
+
+  .modal__input {
+    font-size: 16px;
+    margin-bottom: 24px;
+  }
+
+  .modal__button-submit {
+    width: 276px;
+  }
+}
