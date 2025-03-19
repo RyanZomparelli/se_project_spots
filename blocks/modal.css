@@ -1,4 +1,8 @@
 .modal {
+  /* Without using opacity: 0;  in .modal and opacity: 1; in .modal__opened
+   the buttons and input fields lingered after closing the modal
+   even though the container disappered immediately*/
+  opacity: 0;
   visibility: hidden;
   background-color: rgba(0, 0, 0, 0.5);
   position: fixed;
@@ -13,6 +17,10 @@
 }
 
 .modal_opened {
+  /* Without using opacity: 0;  in .modal and opacity: 1; in .modal__opened
+   the buttons and input fields lingered after closing the modal
+   even though the container disappered immediately*/
+  opacity: 1;
   visibility: visible;
 }
 
