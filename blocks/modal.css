@@ -57,7 +57,7 @@
 
 .modal__title {
   color: rgba(33, 33, 33, 1);
-  font-family: Poppins;
+  font-family: Poppins, Arial, Helvetica, sans-serif;
   font-weight: 500;
   font-size: 32px;
   line-height: 1;
@@ -71,7 +71,7 @@
 
 .modal__label {
   color: rgba(33, 33, 33, 0.7);
-  font-family: Poppins;
+  font-family: Poppins, Arial, Helvetica, sans-serif;
   font-weight: 500;
   font-size: 16px;
   line-height: 1.1;
@@ -82,7 +82,7 @@
 
 .modal__input {
   color: rgba(33, 33, 33, 1);
-  font-family: Poppins;
+  font-family: Poppins, Arial, Helvetica, sans-serif;
   font-weight: 500;
   font-size: 20px;
   line-height: 1;
