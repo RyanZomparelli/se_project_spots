@@ -26,24 +26,26 @@ const initialCards = [
 ];
 
 const editModalOpenBtn = document.querySelector(".profile__edit-button");
-const editModal = document.querySelector("#edit-modal");
-const editModalCloseBtn = editModal.querySelector(".modal__button-close");
+const editProfileModal = document.querySelector("#edit-modal");
+const editModalCloseBtn = editProfileModal.querySelector(
+  ".modal__button-close"
+);
 
 const profileName = document.querySelector(".profile__name");
-const nameInput = editModal.querySelector("#name-input");
+const nameInput = editProfileModal.querySelector("#name-input");
 const profileDescription = document.querySelector(".profile__description");
-const descriptionInput = editModal.querySelector("#description-input");
+const descriptionInput = editProfileModal.querySelector("#description-input");
 
-const editProfileForm = editModal.querySelector(".modal__form");
+const editProfileForm = editProfileModal.querySelector(".modal__form");
 
 function editProfileOpen() {
   nameInput.value = profileName.textContent;
   descriptionInput.value = profileDescription.textContent;
-  editModal.classList.add("modal_opened");
+  editProfileModal.classList.add("modal_opened");
 }
 
 function editProfileToggle() {
-  editModal.classList.toggle("modal_opened");
+  editProfileModal.classList.toggle("modal_opened");
 }
 
 function handleEditProfileFormSubmit(event) {
@@ -57,3 +59,22 @@ editModalOpenBtn.addEventListener("click", editProfileOpen);
 editModalCloseBtn.addEventListener("click", editProfileToggle);
 
 editProfileForm.addEventListener("submit", handleEditProfileFormSubmit);
+
+function getCardElement(data) {
+  const cardElement = document
+    .querySelector("#card-template")
+    .content.querySelector(".card")
+    .cloneNode(true);
+  const cardTitle = cardElement.querySelector(".card__title");
+  cardTitle.textContent = data.name;
+  const cardImage = (cardElement.querySelector(".card__image").src = data.link);
+  cardImage.alt = data.name;
+  return cardElement;
+}
+
+const cardsList = document.querySelector(".cards__list");
+
+for (let i = 0; i < initialCards.length; i++) {
+  getCardElement(initialCards[i]);
+  cardsList.prepend(getCardElement(initialCards[i]));
+}
