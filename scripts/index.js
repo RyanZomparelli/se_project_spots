@@ -50,7 +50,7 @@ function fillEditProfileForm() {
 // Passed to the eventListener method for the edit profile button as the handler
 function editProfileOpen() {
   fillEditProfileForm();
-  editProfileModal.classList.add("modal_opened");
+  editProfileModal.classList.add("modal_is-opened");
 }
 
 // Closes the edit modal
@@ -58,7 +58,7 @@ function editProfileOpen() {
 function editProfileClose() {
   // Removes a BEM modifier class assigneed to the modal container set to visibility: hidden;
   // to close the modal.
-  editProfileModal.classList.remove("modal_opened");
+  editProfileModal.classList.remove("modal_is-opened");
 }
 
 // Handles form submission when user clicks the submit button
