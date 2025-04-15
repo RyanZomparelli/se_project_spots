@@ -14,6 +14,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: visibility 0s linear 0.5s, opacity 0.5s linear;
 }
 
 .modal_is-opened {
@@ -22,6 +23,7 @@
    even though the container disappered immediately*/
   opacity: 1;
   visibility: visible;
+  transition-delay: 0s;
 }
 
 .modal__container {
