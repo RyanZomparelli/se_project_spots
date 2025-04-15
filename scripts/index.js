@@ -32,17 +32,24 @@ const editModalCloseBtn = editProfileModal.querySelector(
   ".modal__button-close"
 );
 
+// Selects New post modal and buttons
+const newPostModal = document.querySelector("#new-post-modal");
+const newPostOpenBtn = document.querySelector(".profile__button-add");
+const newPostClosebtn = newPostModal.querySelector(".modal__button-close");
+
+// Selects profile text nodes and profile input values
 const profileName = document.querySelector(".profile__name");
 const nameInput = editProfileModal.querySelector("#name-input");
 const profileDescription = document.querySelector(".profile__description");
 const descriptionInput = editProfileModal.querySelector("#description-input");
 
-const editProfileForm = editProfileModal.querySelector(".modal__form");
+// Selects new post inputs
+const linkInput = newPostModal.querySelector("#image-input");
+const captionInput = newPostModal.querySelector("#caption-input");
 
-// Selects New post modal and buttons
-const newPostModal = document.querySelector("#new-post-modal");
-const newPostOpenBtn = document.querySelector(".profile__button-add");
-const newPostClosebtn = newPostModal.querySelector(".modal__button-close");
+// Selects each form from it's respective modal
+const editProfileForm = editProfileModal.querySelector(".modal__form");
+const newPostForm = newPostModal.querySelector(".modal__form");
 
 // New post modal open and close functions
 function newPostOpen() {
@@ -55,6 +62,17 @@ function newPostClose() {
 // New post open and close event listeners
 newPostOpenBtn.addEventListener("click", newPostOpen);
 newPostClosebtn.addEventListener("click", newPostClose);
+
+// New post submisson handler
+function handleAddCardSubmit(evt) {
+  evt.preventDefault();
+  console.log(linkInput.value);
+  console.log(captionInput.value);
+  newPostClose();
+}
+
+// New post submit listener
+newPostForm.addEventListener("submit", handleAddCardSubmit);
 
 // Sets default values when the edit modal form is opened.
 // Included in the body of the editProfileOpen function for modal start up.
