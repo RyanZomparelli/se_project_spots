@@ -25,6 +25,7 @@ const initialCards = [
   },
 ];
 
+// Selects Edit profile modal and buttons
 const editModalOpenBtn = document.querySelector(".profile__edit-button");
 const editProfileModal = document.querySelector("#edit-profile-modal");
 const editModalCloseBtn = editProfileModal.querySelector(
@@ -37,6 +38,23 @@ const profileDescription = document.querySelector(".profile__description");
 const descriptionInput = editProfileModal.querySelector("#description-input");
 
 const editProfileForm = editProfileModal.querySelector(".modal__form");
+
+// Selects New post modal and buttons
+const newPostModal = document.querySelector("#new-post-modal");
+const newPostOpenBtn = document.querySelector(".profile__button-add");
+const newPostClosebtn = newPostModal.querySelector(".modal__button-close");
+
+// New post modal open and close functions
+function newPostOpen() {
+  newPostModal.classList.add("modal_is-opened");
+}
+function newPostClose() {
+  newPostModal.classList.remove("modal_is-opened");
+}
+
+// New post open and close event listeners
+newPostOpenBtn.addEventListener("click", newPostOpen);
+newPostClosebtn.addEventListener("click", newPostClose);
 
 // Sets default values when the edit modal form is opened.
 // Included in the body of the editProfileOpen function for modal start up.
