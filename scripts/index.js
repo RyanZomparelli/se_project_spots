@@ -25,18 +25,54 @@ const initialCards = [
   },
 ];
 
+// Selects Edit profile modal and buttons
 const editModalOpenBtn = document.querySelector(".profile__edit-button");
-const editProfileModal = document.querySelector("#edit-modal");
+const editProfileModal = document.querySelector("#edit-profile-modal");
 const editModalCloseBtn = editProfileModal.querySelector(
   ".modal__button-close"
 );
 
+// Selects New post modal and buttons
+const newPostModal = document.querySelector("#new-post-modal");
+const newPostOpenBtn = document.querySelector(".profile__button-add");
+const newPostClosebtn = newPostModal.querySelector(".modal__button-close");
+
+// Selects profile text nodes and profile input values
 const profileName = document.querySelector(".profile__name");
 const nameInput = editProfileModal.querySelector("#name-input");
 const profileDescription = document.querySelector(".profile__description");
 const descriptionInput = editProfileModal.querySelector("#description-input");
 
+// Selects new post inputs
+const linkInput = newPostModal.querySelector("#image-input");
+const captionInput = newPostModal.querySelector("#caption-input");
+
+// Selects each form from it's respective modal
 const editProfileForm = editProfileModal.querySelector(".modal__form");
+const newPostForm = newPostModal.querySelector(".modal__form");
+
+// New post modal open and close functions
+function newPostOpen() {
+  newPostModal.classList.add("modal_is-opened");
+}
+function newPostClose() {
+  newPostModal.classList.remove("modal_is-opened");
+}
+
+// New post open and close event listeners
+newPostOpenBtn.addEventListener("click", newPostOpen);
+newPostClosebtn.addEventListener("click", newPostClose);
+
+// New post submisson handler
+function handleAddCardSubmit(evt) {
+  evt.preventDefault();
+  console.log(linkInput.value);
+  console.log(captionInput.value);
+  newPostClose();
+}
+
+// New post submit listener
+newPostForm.addEventListener("submit", handleAddCardSubmit);
 
 // Sets default values when the edit modal form is opened.
 // Included in the body of the editProfileOpen function for modal start up.
@@ -50,7 +86,7 @@ function fillEditProfileForm() {
 // Passed to the eventListener method for the edit profile button as the handler
 function editProfileOpen() {
   fillEditProfileForm();
-  editProfileModal.classList.add("modal_opened");
+  editProfileModal.classList.add("modal_is-opened");
 }
 
 // Closes the edit modal
@@ -58,7 +94,7 @@ function editProfileOpen() {
 function editProfileClose() {
   // Removes a BEM modifier class assigneed to the modal container set to visibility: hidden;
   // to close the modal.
-  editProfileModal.classList.remove("modal_opened");
+  editProfileModal.classList.remove("modal_is-opened");
 }
 
 // Handles form submission when user clicks the submit button
