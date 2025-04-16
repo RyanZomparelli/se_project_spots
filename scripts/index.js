@@ -51,24 +51,24 @@ const captionInput = newPostModal.querySelector("#caption-input");
 const editProfileForm = editProfileModal.querySelector(".modal__form");
 const newPostForm = newPostModal.querySelector(".modal__form");
 
-// New post modal open and close functions
-function newPostOpen() {
-  newPostModal.classList.add("modal_is-opened");
+// General purpose open and close modal logic
+function openModal(modal) {
+  modal.classList.add("modal_is-opened");
 }
-function newPostClose() {
-  newPostModal.classList.remove("modal_is-opened");
+function closeModal(modal) {
+  modal.classList.remove("modal_is-opened");
 }
 
 // New post open and close event listeners
-newPostOpenBtn.addEventListener("click", newPostOpen);
-newPostClosebtn.addEventListener("click", newPostClose);
+newPostOpenBtn.addEventListener("click", () => openModal(newPostModal));
+newPostClosebtn.addEventListener("click", () => closeModal(newPostModal));
 
 // New post submisson handler
 function handleAddCardSubmit(evt) {
   evt.preventDefault();
   console.log(linkInput.value);
   console.log(captionInput.value);
-  newPostClose();
+  closeModal(newPostModal);
 }
 
 // New post submit listener
@@ -82,21 +82,6 @@ function fillEditProfileForm() {
   descriptionInput.value = profileDescription.textContent;
 }
 
-// Opens the edit profile modal with default values
-// Passed to the eventListener method for the edit profile button as the handler
-function editProfileOpen() {
-  fillEditProfileForm();
-  editProfileModal.classList.add("modal_is-opened");
-}
-
-// Closes the edit modal
-// Passed to the eventListener wtih type 'click' for the editProfile modal close button as the handler
-function editProfileClose() {
-  // Removes a BEM modifier class assigneed to the modal container set to visibility: hidden;
-  // to close the modal.
-  editProfileModal.classList.remove("modal_is-opened");
-}
-
 // Handles form submission when user clicks the submit button
 // Passed to the eventListener with type 'submit' for the submit button as the handler
 function handleEditProfileFormSubmit(event) {
@@ -105,16 +90,18 @@ function handleEditProfileFormSubmit(event) {
   // Sets the new inputed values as the new text nodes in the DOM
   profileName.textContent = nameInput.value;
   profileDescription.textContent = descriptionInput.value;
-  editProfileClose();
+  closeModal(editProfileModal);
 }
 
 // Waits for the click and opens or closes the modal using the above functions
-editModalOpenBtn.addEventListener("click", editProfileOpen);
-editModalCloseBtn.addEventListener("click", editProfileClose);
+editModalOpenBtn.addEventListener("click", function () {
+  openModal(editProfileModal);
+  fillEditProfileForm();
+});
+editModalCloseBtn.addEventListener("click", () => closeModal(editProfileModal));
 
 // Waits for the submit buton to be clicked and submits the form using the above function
 editProfileForm.addEventListener("submit", handleEditProfileFormSubmit);
-
 // Clones the template element and all it's children from the html to an editable
 //  and reusable dom object and stores it in a variable called cardElement then
 // selects the children elements and injects them with data from properties of
