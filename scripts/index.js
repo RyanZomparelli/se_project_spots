@@ -101,11 +101,16 @@ function getCardElement(data) {
 // cards in the loop below.
 const cardsList = document.querySelector(".cards__list");
 
-// Loops through each object of the array initialCards and creates a card using
-// the funtion getCardElement and the array data.
-for (let i = 0; i < initialCards.length; i++) {
-  // Creates a card and stores it in a card variable
-  const card = getCardElement(initialCards[i]);
-  // Adds the new card to the top of the cardsList.
+// // Loops through each object of the array initialCards and creates a card using
+// // the funtion getCardElement and the array data.
+// for (let i = 0; i < initialCards.length; i++) {
+//   // Creates a card and stores it in a card variable
+//   const card = getCardElement(initialCards[i]);
+//   // Adds the new card to the top of the cardsList.
+//   cardsList.prepend(card);
+// }
+initialCards.forEach(function (item) {
+  console.log(`This is the name: ${item.name}\nTHis is the link: ${item.link}`);
+  const card = getCardElement(item);
   cardsList.prepend(card);
-}
+});
