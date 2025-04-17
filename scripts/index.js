@@ -123,9 +123,12 @@ function getCardElement(data) {
   cardImage.src = data.link;
   cardImage.alt = data.name;
   const cardLikeBtn = cardElement.querySelector(".card__like-button");
+  // change class to card__like-button_active and switch to arrow function
   cardLikeBtn.addEventListener("click", function (evt) {
     cardLikeBtn.classList.toggle("card__like-button_type_liked");
   });
+  const cardDeleteBtn = cardElement.querySelector(".card__delete-button");
+  cardDeleteBtn.addEventListener("click", () => cardElement.remove());
   return cardElement;
 }
 
