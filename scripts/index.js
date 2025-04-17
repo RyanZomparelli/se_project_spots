@@ -80,15 +80,13 @@ function handleAddCardSubmit(evt) {
 newPostForm.addEventListener("submit", handleAddCardSubmit);
 
 // Sets default values when the edit modal form is opened.
-// Included in the body of the editProfileOpen function for modal start up.
 function fillEditProfileForm() {
-  // Sets the text FROM the html elements as the default input values.
+  // Uses the text FROM the html elements as the default input values.
   nameInput.value = profileName.textContent;
   descriptionInput.value = profileDescription.textContent;
 }
 
-// Handles form submission when user clicks the submit button
-// Passed to the eventListener with type 'submit' for the submit button as the handler
+// Edit Profile submission handler
 function handleEditProfileFormSubmit(event) {
   // Prevents the page from refreshing when the submit button is clicked
   event.preventDefault();
@@ -98,22 +96,23 @@ function handleEditProfileFormSubmit(event) {
   closeModal(editProfileModal);
 }
 
-// Waits for the click and opens or closes the modal using the above functions
+// Edit Profile open/close event listners
 editModalOpenBtn.addEventListener("click", function () {
   openModal(editProfileModal);
   fillEditProfileForm();
 });
+
 editModalCloseBtn.addEventListener("click", () => closeModal(editProfileModal));
 
-// Waits for the submit buton to be clicked and submits the form using the above function
+// Edit Profile submit listener
 editProfileForm.addEventListener("submit", handleEditProfileFormSubmit);
 
-// Clones the template element and all it's children from the html to an editable
-//  and reusable dom object and stores it in a variable called cardElement then
-// selects the children elements and injects them with data from properties of
-// the objects inside the array initialCards.
-// Called in the for loop below to create cards with the actual data from initialCards.
+// Creates cards
 function getCardElement(data) {
+  // Clones the template element and all it's children from the html to an editable
+  //  and reusable dom object and stores it in a variable called cardElement then
+  // selects the children elements and injects them with data from properties of
+  // the objects inside the array initialCards.
   const cardElement = document
     .querySelector("#card-template")
     .content.querySelector(".card")
@@ -125,6 +124,7 @@ function getCardElement(data) {
   cardImage.src = data.link;
   cardImage.alt = data.name;
 
+  // Makes sure every card thats created has like button and delete button functionality
   const cardLikeBtn = cardElement.querySelector(".card__like-button");
   cardLikeBtn.addEventListener("click", () =>
     cardLikeBtn.classList.toggle("card__like-button_active")
@@ -136,18 +136,10 @@ function getCardElement(data) {
   return cardElement;
 }
 
-// Selects and stores the <ul> element from the html to accept the newly created
-// cards in the loop below.
+// Selects the <ul> element from the html to accept the newly created cards
 const cardsList = document.querySelector(".cards__list");
 
-// // Loops through each object of the array initialCards and creates a card using
-// // the funtion getCardElement and the array data.
-// for (let i = 0; i < initialCards.length; i++) {
-//   // Creates a card and stores it in a card variable
-//   const card = getCardElement(initialCards[i]);
-//   // Adds the new card to the top of the cardsList.
-//   cardsList.prepend(card);
-// }
+// Adds default cards to the dom
 initialCards.forEach(function (item) {
   const card = getCardElement(item);
   cardsList.prepend(card);
