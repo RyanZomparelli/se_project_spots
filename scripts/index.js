@@ -23,6 +23,10 @@ const initialCards = [
     name: "Mountain house",
     link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/spots/6-photo-by-moritz-feldmann-from-pexels.jpg",
   },
+  {
+    name: "Golden Gate Bridge",
+    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/spots/7-photo-by-griffin-wooldridge-from-pexels.jpg",
+  },
 ];
 
 // Selects Edit profile modal and buttons
@@ -51,6 +55,12 @@ const captionInput = newPostModal.querySelector("#caption-input");
 const editProfileForm = editProfileModal.querySelector(".modal__form");
 const newPostForm = newPostModal.querySelector(".modal__form");
 
+// Selects Preview modal elements
+const previewModal = document.querySelector("#preview-modal");
+const previewCloseBtn = previewModal.querySelector(".modal__button-close");
+const previewImage = previewModal.querySelector(".modal__img");
+const previewCaption = previewModal.querySelector(".modal__caption");
+
 // General purpose open and close modal logic
 function openModal(modal) {
   modal.classList.add("modal_is-opened");
@@ -66,6 +76,9 @@ newPostClosebtn.addEventListener("click", () => closeModal(newPostModal));
 // New post submisson handler
 function handleAddCardSubmit(evt) {
   evt.preventDefault();
+  console.log(
+    `This is the name: ${captionInput.value}\nThis is the link: ${linkInput.value}`
+  );
   const inputData = {
     name: captionInput.value,
     link: linkInput.value,
@@ -103,6 +116,7 @@ editModalOpenBtn.addEventListener("click", function () {
 });
 
 editModalCloseBtn.addEventListener("click", () => closeModal(editProfileModal));
+previewCloseBtn.addEventListener("click", () => closeModal(previewModal));
 
 // Edit Profile submit listener
 editProfileForm.addEventListener("submit", handleEditProfileFormSubmit);
@@ -132,6 +146,15 @@ function getCardElement(data) {
 
   const cardDeleteBtn = cardElement.querySelector(".card__delete-button");
   cardDeleteBtn.addEventListener("click", () => cardElement.remove());
+
+  cardElement.addEventListener("click", function (evt) {
+    if (evt.target !== cardDeleteBtn && evt.target !== cardLikeBtn) {
+      openModal(previewModal);
+      previewImage.src = data.link;
+      previewImage.alt = data.name;
+      previewCaption.textContent = data.name;
+    }
+  });
 
   return cardElement;
 }
