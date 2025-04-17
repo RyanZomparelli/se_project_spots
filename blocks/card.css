@@ -69,12 +69,26 @@
   transition: 0.2s;
 }
 
-.card__like-button_type_liked {
+.card__like-button_active {
   background-image: url(../images/heart_like.png);
   opacity: 1;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  border: none;
+  margin: 0;
+  padding: 0;
+  transition: 0.2s;
 }
-.card__like-button_type_liked:hover {
+.card__like-button_active:hover {
   background-image: url(../images/heart_like_hover.png);
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  border: 1px;
+  margin: 0;
+  padding: 0;
+  transition: 0.2s;
 }
 
 @media screen and (max-width: 630px) {

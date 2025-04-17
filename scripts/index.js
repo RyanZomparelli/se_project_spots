@@ -107,6 +107,7 @@ editModalCloseBtn.addEventListener("click", () => closeModal(editProfileModal));
 
 // Waits for the submit buton to be clicked and submits the form using the above function
 editProfileForm.addEventListener("submit", handleEditProfileFormSubmit);
+
 // Clones the template element and all it's children from the html to an editable
 //  and reusable dom object and stores it in a variable called cardElement then
 // selects the children elements and injects them with data from properties of
@@ -117,18 +118,21 @@ function getCardElement(data) {
     .querySelector("#card-template")
     .content.querySelector(".card")
     .cloneNode(true);
+
   const cardTitle = cardElement.querySelector(".card__title");
   cardTitle.textContent = data.name;
   const cardImage = cardElement.querySelector(".card__image");
   cardImage.src = data.link;
   cardImage.alt = data.name;
+
   const cardLikeBtn = cardElement.querySelector(".card__like-button");
-  // change class to card__like-button_active and switch to arrow function
-  cardLikeBtn.addEventListener("click", function (evt) {
-    cardLikeBtn.classList.toggle("card__like-button_type_liked");
-  });
+  cardLikeBtn.addEventListener("click", () =>
+    cardLikeBtn.classList.toggle("card__like-button_active")
+  );
+
   const cardDeleteBtn = cardElement.querySelector(".card__delete-button");
   cardDeleteBtn.addEventListener("click", () => cardElement.remove());
+
   return cardElement;
 }
 
