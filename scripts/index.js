@@ -122,6 +122,10 @@ function getCardElement(data) {
   const cardImage = cardElement.querySelector(".card__image");
   cardImage.src = data.link;
   cardImage.alt = data.name;
+  const cardLikeBtn = cardElement.querySelector(".card__like-button");
+  cardLikeBtn.addEventListener("click", function (evt) {
+    cardLikeBtn.classList.toggle("card__like-button_type_liked");
+  });
   return cardElement;
 }
 
