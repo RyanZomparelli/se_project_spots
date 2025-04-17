@@ -66,8 +66,13 @@ newPostClosebtn.addEventListener("click", () => closeModal(newPostModal));
 // New post submisson handler
 function handleAddCardSubmit(evt) {
   evt.preventDefault();
-  console.log(linkInput.value);
-  console.log(captionInput.value);
+  const inputData = {
+    name: captionInput.value,
+    link: linkInput.value,
+  };
+  const card = getCardElement(inputData);
+  cardsList.prepend(card);
+  newPostForm.reset();
   closeModal(newPostModal);
 }
 
@@ -133,7 +138,6 @@ const cardsList = document.querySelector(".cards__list");
 //   cardsList.prepend(card);
 // }
 initialCards.forEach(function (item) {
-  console.log(`This is the name: ${item.name}\nTHis is the link: ${item.link}`);
   const card = getCardElement(item);
   cardsList.prepend(card);
 });
