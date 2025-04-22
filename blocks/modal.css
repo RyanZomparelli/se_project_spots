@@ -14,7 +14,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: visibility 0s linear 0.5s, opacity 0.5s linear;
+  transition: visibility 0.3s, opacity 0.3s ease-in;
 }
 
 .modal_is-opened {
@@ -59,7 +59,7 @@
 .modal__button-close_type_preview {
   top: 0px;
   right: -52.5px;
-  background-image: url(../images/white_close.png);
+  background-image: url(../images/white_close.svg);
   background-color: transparent;
   opacity: 1;
 }

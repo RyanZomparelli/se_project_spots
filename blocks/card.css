@@ -3,7 +3,7 @@
 }
 
 .card__delete-button {
-  background-image: url(../images/trash-can.png);
+  background-image: url(../images/trash-can.svg);
   background-color: rgba(0, 0, 0, 0.3);
   border-radius: 50%;
   border: none;
@@ -18,7 +18,7 @@
 }
 
 .card__delete-button:hover {
-  background-image: url(../images/trash-can_hover.png);
+  background-image: url(../images/trash-can_hover.svg);
 }
 
 .card__image {
@@ -70,7 +70,7 @@
 }
 
 .card__like-button_active {
-  background-image: url(../images/Union.png);
+  background-image: url(../images/Union.svg);
   opacity: 1;
   background-size: contain;
   background-position: center;
@@ -82,7 +82,7 @@
   transition: 0.2s;
 }
 .card__like-button_active:hover {
-  background-image: url(../images/Union_hover.png);
+  background-image: url(../images/Union_hover.svg);
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
