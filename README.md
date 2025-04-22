@@ -6,7 +6,7 @@ A photo-sharing social media web app.
 
 **Watch a brief video overview** [here](https://drive.google.com/file/d/13w7uFwlzL-z5HIjMBbJHGKxwVurm0Lfc/view?usp=sharing)
 
-### Overview
+## Overview
 
 - Intro
 - Figma
