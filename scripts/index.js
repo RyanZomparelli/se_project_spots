@@ -39,7 +39,7 @@ const editModalCloseBtn = editProfileModal.querySelector(
 // Selects New post modal and buttons
 const newPostModal = document.querySelector("#new-post-modal");
 const newPostOpenBtn = document.querySelector(".profile__button-add");
-const newPostClosebtn = newPostModal.querySelector(".modal__button-close");
+const newPostCloseBtn = newPostModal.querySelector(".modal__button-close");
 
 // Selects profile text nodes and profile input values
 const profileName = document.querySelector(".profile__name");
@@ -71,14 +71,11 @@ function closeModal(modal) {
 
 // New post open and close event listeners
 newPostOpenBtn.addEventListener("click", () => openModal(newPostModal));
-newPostClosebtn.addEventListener("click", () => closeModal(newPostModal));
+newPostCloseBtn.addEventListener("click", () => closeModal(newPostModal));
 
 // New post submisson handler
 function handleAddCardSubmit(evt) {
   evt.preventDefault();
-  console.log(
-    `This is the name: ${captionInput.value}\nThis is the link: ${linkInput.value}`
-  );
   const inputData = {
     name: captionInput.value,
     link: linkInput.value,
@@ -109,7 +106,7 @@ function handleEditProfileFormSubmit(event) {
   closeModal(editProfileModal);
 }
 
-// Edit Profile open/close event listners
+// Edit Profile open/close event listeners
 editModalOpenBtn.addEventListener("click", function () {
   openModal(editProfileModal);
   fillEditProfileForm();
@@ -148,7 +145,7 @@ function getCardElement(data) {
   cardDeleteBtn.addEventListener("click", () => cardElement.remove());
 
   cardElement.addEventListener("click", function (evt) {
-    if (evt.target !== cardDeleteBtn && evt.target !== cardLikeBtn) {
+    if (evt.target === cardImage) {
       openModal(previewModal);
       previewImage.src = data.link;
       previewImage.alt = data.name;
@@ -158,6 +155,7 @@ function getCardElement(data) {
 
   return cardElement;
 }
+// End of getCardElement function
 
 // Selects the <ul> element from the html to accept the newly created cards
 const cardsList = document.querySelector(".cards__list");
