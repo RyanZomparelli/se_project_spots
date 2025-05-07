@@ -104,12 +104,16 @@
   font-weight: 500;
   font-size: 20px;
   line-height: 1;
-  margin: 0 0 32px;
+  margin: 0 0 8px;
   padding: 16px 0 16px 12px;
   border: 1px solid rgba(33, 33, 33, 0.4);
   border-radius: 8px;
   transition: 0.3s ease-out;
   cursor: pointer;
+}
+
+.modal__input_type_error {
+  border: 1px solid red;
 }
 
 .modal__input:hover {
@@ -119,6 +123,20 @@
 
 .modal__input::placeholder {
   color: rgba(33, 33, 33, 0.3);
+}
+
+.modal__input-error {
+  color: red;
+  opacity: 0;
+  font-family: Poppins, Arial, Helvetica, sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.1;
+  margin: 0 0 32px;
+}
+
+.modal__input-error_active {
+  opacity: 1;
 }
 
 .modal__button-submit {
@@ -136,6 +154,13 @@
 .modal__button-submit:hover {
   opacity: 0.8;
   transition: 0.2s ease-in;
+}
+
+/* Overrides the hover styles when disabled. */
+.modal__button-submit_disabled,
+.modal__button-submit_disabled:hover {
+  opacity: 50%;
+  cursor: default;
 }
 
 .modal__img {
@@ -183,6 +208,14 @@
 
   .modal__input {
     font-size: 16px;
+    margin-bottom: 24px;
+  }
+
+  .modal__input_type_error {
+    margin-bottom: 0;
+  }
+
+  .modal__input-error {
     margin-bottom: 24px;
   }
 
