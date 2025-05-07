@@ -151,14 +151,16 @@
   transition: 0.2s ease-out;
 }
 
-.modal__button-submit_disabled {
-  opacity: 50%;
-  cursor: none;
-}
-
 .modal__button-submit:hover {
   opacity: 0.8;
   transition: 0.2s ease-in;
+}
+
+/* Overrides the hover styles when disabled. */
+.modal__button-submit_disabled,
+.modal__button-submit_disabled:hover {
+  opacity: 50%;
+  cursor: default;
 }
 
 .modal__img {

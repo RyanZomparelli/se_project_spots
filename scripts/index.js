@@ -35,11 +35,15 @@ const editProfileModal = document.querySelector("#edit-profile-modal");
 const editModalCloseBtn = editProfileModal.querySelector(
   ".modal__button-close"
 );
+const editProfileSubmitBtn = editProfileModal.querySelector(
+  ".modal__button-submit"
+);
 
 // Selects New post modal and buttons
 const newPostModal = document.querySelector("#new-post-modal");
 const newPostOpenBtn = document.querySelector(".profile__button-add");
 const newPostCloseBtn = newPostModal.querySelector(".modal__button-close");
+const newPostSubmitBtn = newPostModal.querySelector(".modal__button-submit");
 
 // Selects profile text nodes and profile input values
 const profileName = document.querySelector(".profile__name");
@@ -61,13 +65,35 @@ const previewCloseBtn = previewModal.querySelector(".modal__button-close");
 const previewImage = previewModal.querySelector(".modal__img");
 const previewCaption = previewModal.querySelector(".modal__caption");
 
-// General purpose open and close modal logic
+// General purpose open and close modal logic w/ Escape key close
 function openModal(modal) {
   modal.classList.add("modal_is-opened");
+  document.addEventListener("keydown", handleKeyDown);
 }
 function closeModal(modal) {
   modal.classList.remove("modal_is-opened");
+  //Removed keydown event listener for performance reasons
+  document.removeEventListener("keydown", handleKeyDown);
 }
+// click to close logic
+const closeOnClick = (modal) => {
+  modal.addEventListener("click", (e) => {
+    if (!e.target.closest(".modal__input")) {
+      closeModal(modal);
+    }
+  });
+};
+//Handle keydown event Escape close
+function handleKeyDown(e) {
+  modalList.forEach((modal) => {
+    if (e.key === "Escape") {
+      closeModal(modal);
+    }
+  });
+}
+//handle click to close events
+const modalList = document.querySelectorAll(".modal");
+modalList.forEach((modal) => closeOnClick(modal));
 
 // New post open and close event listeners
 newPostOpenBtn.addEventListener("click", () => openModal(newPostModal));
@@ -84,6 +110,7 @@ function handleAddCardSubmit(evt) {
   cardsList.prepend(card);
   newPostForm.reset();
   closeModal(newPostModal);
+  disableSubmitButton(newPostSubmitBtn, settings);
 }
 
 // New post submit listener
@@ -104,6 +131,7 @@ function handleEditProfileFormSubmit(event) {
   profileName.textContent = nameInput.value;
   profileDescription.textContent = descriptionInput.value;
   closeModal(editProfileModal);
+  disableSubmitButton(editProfileSubmitBtn);
 }
 
 // Edit Profile open/close event listeners
