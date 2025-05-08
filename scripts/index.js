@@ -55,9 +55,9 @@ const descriptionInput = editProfileModal.querySelector("#description-input");
 const linkInput = newPostModal.querySelector("#image-input");
 const captionInput = newPostModal.querySelector("#caption-input");
 
-// Selects each form from it's respective modal
-const editProfileForm = editProfileModal.querySelector(".modal__form");
-const newPostForm = newPostModal.querySelector(".modal__form");
+// Selects each form
+const editProfileForm = document.forms["edit-profile"];
+const newPostForm = document.forms["new-post"];
 
 // Selects Preview modal elements
 const previewModal = document.querySelector("#preview-modal");
@@ -76,7 +76,7 @@ function closeModal(modal) {
   document.removeEventListener("keydown", handleKeyDown);
 }
 // click to close logic
-const closeOnClick = (modal) => {
+const handleClickToClose = (modal) => {
   modal.addEventListener("click", (e) => {
     if (!e.target.closest(".modal__input")) {
       closeModal(modal);
@@ -93,7 +93,7 @@ function handleKeyDown(e) {
 }
 //handle click to close events
 const modalList = document.querySelectorAll(".modal");
-modalList.forEach((modal) => closeOnClick(modal));
+modalList.forEach((modal) => handleClickToClose(modal));
 
 // New post open and close event listeners
 newPostOpenBtn.addEventListener("click", () => openModal(newPostModal));
@@ -137,6 +137,7 @@ function handleEditProfileFormSubmit(event) {
 // Edit Profile open/close event listeners
 editModalOpenBtn.addEventListener("click", function () {
   openModal(editProfileModal);
+  resetValidation(editProfileForm, [nameInput, descriptionInput], settings);
   fillEditProfileForm();
 });
 
