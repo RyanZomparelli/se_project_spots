@@ -78,7 +78,7 @@ function closeModal(modal) {
 // click to close logic
 const handleClickToClose = (modal) => {
   modal.addEventListener("click", (e) => {
-    if (!e.target.closest(".modal__input")) {
+    if (!e.target.closest(".modal__container")) {
       closeModal(modal);
     }
   });
