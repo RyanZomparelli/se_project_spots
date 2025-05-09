@@ -23,16 +23,16 @@ const hideInputError = (formEl, inputEl, config) => {
 
 const checkInputValidity = (formEl, inputEl, config) => {
   if (!inputEl.validity.valid) {
-    showInputError(formEl, inputEl, inputEl.validationMessage, settings);
+    showInputError(formEl, inputEl, inputEl.validationMessage, config);
   } else {
-    hideInputError(formEl, inputEl, settings);
+    hideInputError(formEl, inputEl, config);
   }
 };
 
 //Used to reset the edit-profile form validation messages
-const resetValidation = (formEl, inputs) => {
+const resetValidation = (formEl, inputs, config) => {
   inputs.forEach((input) => {
-    hideInputError(formEl, input, settings);
+    hideInputError(formEl, input, config);
   });
 };
 
@@ -49,7 +49,7 @@ const disableSubmitButton = (buttonEl, config) => {
 
 const toggleSubmitButton = (inputs, buttonEl, config) => {
   if (hasInvalidInput(inputs)) {
-    disableSubmitButton(buttonEl, settings);
+    disableSubmitButton(buttonEl, config);
   } else {
     buttonEl.classList.remove(config.inactiveButtonClass);
     buttonEl.disabled = false;
@@ -60,12 +60,12 @@ const setEventListeners = (formEl, config) => {
   const inputList = Array.from(formEl.querySelectorAll(config.inputSelector));
   const submitBtn = formEl.querySelector(config.submitButtonSelector);
 
-  toggleSubmitButton(inputList, submitBtn, settings);
+  toggleSubmitButton(inputList, submitBtn, config);
 
   inputList.forEach((inputEl) => {
     inputEl.addEventListener("input", () => {
-      checkInputValidity(formEl, inputEl, settings);
-      toggleSubmitButton(inputList, submitBtn, settings);
+      checkInputValidity(formEl, inputEl, config);
+      toggleSubmitButton(inputList, submitBtn, config);
     });
   });
 };
@@ -73,7 +73,7 @@ const setEventListeners = (formEl, config) => {
 const enableValidation = (config) => {
   const formList = document.querySelectorAll(config.formSelector);
   formList.forEach((formEl) => {
-    setEventListeners(formEl, settings);
+    setEventListeners(formEl, config);
   });
 };
 
