@@ -131,7 +131,7 @@ function handleEditProfileFormSubmit(event) {
   profileName.textContent = nameInput.value;
   profileDescription.textContent = descriptionInput.value;
   closeModal(editProfileModal);
-  disableSubmitButton(editProfileSubmitBtn);
+  disableSubmitButton(editProfileSubmitBtn, settings);
 }
 
 // Edit Profile open/close event listeners
