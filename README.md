@@ -48,20 +48,20 @@ Check out the validation.js file to see how I utilized a modular format with reu
 
 1440px Resolution
 
-![Spots app 1440](./images/spots_demo/spots_1440.png)
+![Spots app 1440](./src/images/spots_demo/spots_1440.png)
 
 Mobile view 320px resolution
 
-![Spots mobile view](./images/spots_demo/spots_mobile.png)
+![Spots mobile view](./src/images/spots_demo/spots_mobile.png)
 
 Preview modal popup
 
-![Preview modal](./images/preview__modal.png)
+![Preview modal](./src/images/preview__modal.png)
 
 Modal window with dynamic from validation
 
-![Modal window with form validation](./images/form_validation-1.png)
+![Modal window with form validation](./src/images/form_validation-1.png)
 
 Mobile view of modal with dynamic form validation
 
-![Mobile view of modal form validation](./images/form_validation-2.png)
+![Mobile view of modal form validation](./src/images/form_validation-2.png)
