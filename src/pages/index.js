@@ -1,4 +1,8 @@
-import { enableValidation, settings } from "./validation.js";
+import "./index.css";
+import { enableValidation, settings } from "../scripts/validation.js";
+
+//See profileAvatar below
+import avatarSrc from "../images/avatar.jpg";
 
 const initialCards = [
   {
@@ -66,6 +70,10 @@ const previewModal = document.querySelector("#preview-modal");
 const previewCloseBtn = previewModal.querySelector(".modal__button-close");
 const previewImage = previewModal.querySelector(".modal__img");
 const previewCaption = previewModal.querySelector(".modal__caption");
+
+//One method to render images outside the css file. Check index.html to see another method.
+const profileAvatar = document.getElementById("profile-avatar");
+profileAvatar.src = avatarSrc;
 
 enableValidation(settings);
 

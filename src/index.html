@@ -22,20 +22,24 @@
 	photo uploads,
 	picture sharing"
     />
-    <link rel="stylesheet" href="./pages/index.css" />
-    <link rel="icon" type="image/x-icon" href="./favicon.ico" />
     <title>Spots</title>
   </head>
   <body>
     <div class="page">
       <header class="header">
-        <img src="./images/logo.svg" alt="Spots logo." class="header__logo" />
+        <!-- One way to render images outside of css. See index.js to see another method -->
+        <img
+          src="<%= require('./images/logo.svg') %>"
+          alt="Spots logo."
+          class="header__logo"
+        />
       </header>
 
       <main class="content">
         <section class="profile page__section">
+          <!-- Rendered through JS -->
           <img
-            src="./images/avatar.jpg"
+            id="profile-avatar"
             alt="Profile picture."
             class="profile__image"
           />
@@ -44,14 +48,18 @@
             <p class="profile__description">Civil Aviator</p>
             <button class="profile__edit-button" type="button">
               <img
-                src="./images/pencil.svg"
+                src="<%= require('./images/pencil.svg') %>"
                 alt="edit pencil."
                 class="profile__edit-icon"
               />Edit Profile
             </button>
           </div>
           <button class="profile__button-add" type="button">
-            <img src="./images/cross.svg" alt="" class="profile__button-icon" />
+            <img
+              src="<%= require('./images/cross.svg') %>"
+              alt=""
+              class="profile__button-icon"
+            />
             New Post
           </button>
         </section>
@@ -169,6 +177,5 @@
         </div>
       </div>
     </div>
-    <script type="module" src="./scripts/index.js"></script>
   </body>
 </html>
