@@ -1,3 +1,5 @@
+import { enableValidation, settings } from "./validation.js";
+
 const initialCards = [
   {
     name: "Val Thorens",
@@ -64,6 +66,8 @@ const previewModal = document.querySelector("#preview-modal");
 const previewCloseBtn = previewModal.querySelector(".modal__button-close");
 const previewImage = previewModal.querySelector(".modal__img");
 const previewCaption = previewModal.querySelector(".modal__caption");
+
+enableValidation(settings);
 
 // General purpose open and close modal logic w/ Escape key close
 function openModal(modal) {
@@ -194,3 +198,36 @@ initialCards.forEach(function (item) {
   const card = getCardElement(item);
   cardsList.prepend(card);
 });
+
+export {
+  initialCards,
+  editModalOpenBtn,
+  editProfileModal,
+  editModalCloseBtn,
+  editProfileSubmitBtn,
+  newPostModal,
+  newPostOpenBtn,
+  newPostCloseBtn,
+  newPostSubmitBtn,
+  profileName,
+  descriptionInput,
+  nameInput,
+  linkInput,
+  captionInput,
+  editProfileForm,
+  newPostForm,
+  previewModal,
+  previewCloseBtn,
+  previewCaption,
+  previewImage,
+  openModal,
+  closeModal,
+  handleClickToClose,
+  handleKeyDown,
+  modalList,
+  handleAddCardSubmit,
+  fillEditProfileForm,
+  handleEditProfileFormSubmit,
+  getCardElement,
+  cardsList,
+};
