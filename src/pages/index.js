@@ -4,36 +4,33 @@ import { enableValidation, settings } from "../scripts/validation.js";
 //See profileAvatar below
 import avatarSrc from "../images/avatar.jpg";
 
-const initialCards = [
-  {
-    name: "Val Thorens",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/spots/1-photo-by-moritz-feldmann-from-pexels.jpg",
+import API from "../scripts/Api.js";
+
+const api = new API({
+  baseUrl: "https://around-api.en.tripleten-services.com/v1",
+  headers: {
+    authorization: "640264a7-d833-4076-a643-c71cc77da761",
+    "content-type": "application/json",
   },
-  {
-    name: "Restaurant terrace",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/spots/2-photo-by-ceiline-from-pexels.jpg",
-  },
-  {
-    name: "An outdoor cafe",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/spots/3-photo-by-tubanur-dogan-from-pexels.jpg",
-  },
-  {
-    name: "A very long bridge, over the forest and through the trees",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/spots/4-photo-by-maurice-laschet-from-pexels.jpg",
-  },
-  {
-    name: "Tunnel with morning light",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/spots/5-photo-by-van-anh-nguyen-from-pexels.jpg",
-  },
-  {
-    name: "Mountain house",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/spots/6-photo-by-moritz-feldmann-from-pexels.jpg",
-  },
-  {
-    name: "Golden Gate Bridge",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/spots/7-photo-by-griffin-wooldridge-from-pexels.jpg",
-  },
-];
+});
+
+api
+  .getAppData()
+  .then((data) => {
+    //data is an array with two elements. The first element is an array of cards
+    //and the second element is the userInfo.
+    const cardData = data[0];
+    cardData.forEach((item) => {
+      const card = getCardElement(item);
+      cardsList.prepend(card);
+    });
+
+    const userData = data[1];
+    profileAvatar.src = userData.avatar;
+    profileName.textContent = userData.name;
+    profileDescription.textContent = userData.about;
+  })
+  .catch((error) => console.error(error));
 
 // Selects Edit profile modal and buttons
 const editModalOpenBtn = document.querySelector(".profile__edit-button");
@@ -52,6 +49,7 @@ const newPostCloseBtn = newPostModal.querySelector(".modal__button-close");
 const newPostSubmitBtn = newPostModal.querySelector(".modal__button-submit");
 
 // Selects profile text nodes and profile input values
+const profileAvatar = document.getElementById("profile-avatar");
 const profileName = document.querySelector(".profile__name");
 const nameInput = editProfileModal.querySelector("#name-input");
 const profileDescription = document.querySelector(".profile__description");
@@ -70,10 +68,6 @@ const previewModal = document.querySelector("#preview-modal");
 const previewCloseBtn = previewModal.querySelector(".modal__button-close");
 const previewImage = previewModal.querySelector(".modal__img");
 const previewCaption = previewModal.querySelector(".modal__caption");
-
-//One method to render images outside the css file. Check index.html to see another method.
-const profileAvatar = document.getElementById("profile-avatar");
-profileAvatar.src = avatarSrc;
 
 enableValidation(settings);
 
@@ -201,14 +195,7 @@ function getCardElement(data) {
 // Selects the <ul> element from the html to accept the newly created cards
 const cardsList = document.querySelector(".cards__list");
 
-// Adds default cards to the dom
-initialCards.forEach(function (item) {
-  const card = getCardElement(item);
-  cardsList.prepend(card);
-});
-
 export {
-  initialCards,
   editModalOpenBtn,
   editProfileModal,
   editModalCloseBtn,
