@@ -20,13 +20,13 @@ api
   .then((data) => {
     //data is an array with two elements. The first element is an array of cards
     //and the second element is the userInfo.
-    const cardData = data[0];
+    const [cardData, userData] = data;
+
     cardData.forEach((item) => {
       const card = getCardElement(item);
       cardsList.prepend(card);
     });
 
-    const userData = data[1];
     profileAvatar.src = userData.avatar;
     profileName.textContent = userData.name;
     profileDescription.textContent = userData.about;
