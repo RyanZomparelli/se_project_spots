@@ -2,7 +2,6 @@ export default class API {
   constructor(options) {
     this._baseUrl = options.baseUrl;
     this._headers = options.headers;
-    this._authorization = options.headers.authorization;
   }
 
   _getInitialCards() {
