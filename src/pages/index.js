@@ -1,8 +1,9 @@
 import "./index.css";
-import { enableValidation, settings } from "../scripts/validation.js";
-
-//See profileAvatar below
-import avatarSrc from "../images/avatar.jpg";
+import {
+  enableValidation,
+  resetValidation,
+  settings,
+} from "../scripts/validation.js";
 
 import API from "../scripts/Api.js";
 
@@ -41,6 +42,9 @@ const editModalCloseBtn = editProfileModal.querySelector(
 const editProfileSubmitBtn = editProfileModal.querySelector(
   ".modal__button-submit"
 );
+
+// Selects the <ul> element from the html to accept the newly created cards
+const cardsList = document.querySelector(".cards__list");
 
 // Selects New post modal and buttons
 const newPostModal = document.querySelector("#new-post-modal");
@@ -191,9 +195,6 @@ function getCardElement(data) {
   return cardElement;
 }
 // End of getCardElement function
-
-// Selects the <ul> element from the html to accept the newly created cards
-const cardsList = document.querySelector(".cards__list");
 
 export {
   editModalOpenBtn,
