@@ -140,8 +140,12 @@ function fillEditProfileForm() {
 function handleEditProfileFormSubmit(event) {
   // Prevents the page from refreshing when the submit button is clicked
   event.preventDefault();
+  const inputData = {
+    name: nameInput.value,
+    about: descriptionInput.value,
+  };
   api
-    .editUserInfo(nameInput.value, descriptionInput.value)
+    .editUserInfo(inputData)
     .then((data) => {
       //If the promise resolves, the DOM updates with the new Values saved to the server
       profileName.textContent = data.name;

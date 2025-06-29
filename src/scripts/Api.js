@@ -32,7 +32,7 @@ export default class API {
     return Promise.all([this._getInitialCards(), this._getUserInfo()]);
   }
 
-  editUserInfo(name, about) {
+  editUserInfo({ name, about }) {
     return fetch(`${this._baseUrl}/users/me`, {
       method: "PATCH",
       headers: this._headers,
