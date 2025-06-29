@@ -119,11 +119,16 @@ function handleAddCardSubmit(evt) {
     name: captionInput.value,
     link: linkInput.value,
   };
-  const card = getCardElement(inputData);
-  cardsList.prepend(card);
-  newPostForm.reset();
-  closeModal(newPostModal);
-  disableSubmitButton(newPostSubmitBtn, settings);
+  api
+    .addNewCard(inputData)
+    .then((data) => {
+      const card = getCardElement(data);
+      cardsList.prepend(card);
+      newPostForm.reset();
+      closeModal(newPostModal);
+      disableSubmitButton(newPostSubmitBtn, settings);
+    })
+    .catch((error) => console.error(error));
 }
 
 // New post submit listener
@@ -150,11 +155,11 @@ function handleEditProfileFormSubmit(event) {
       //If the promise resolves, the DOM updates with the new Values saved to the server
       profileName.textContent = data.name;
       profileDescription.textContent = data.about;
+      closeModal(editProfileModal);
+      disableSubmitButton(editProfileSubmitBtn, settings);
     })
     //Make a visible UX response later
     .catch((error) => console.error(error));
-  closeModal(editProfileModal);
-  disableSubmitButton(editProfileSubmitBtn, settings);
 }
 
 // Edit Profile open/close event listeners
