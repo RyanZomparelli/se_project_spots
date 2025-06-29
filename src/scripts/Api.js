@@ -31,4 +31,21 @@ export default class API {
   getAppData() {
     return Promise.all([this._getInitialCards(), this._getUserInfo()]);
   }
+
+  editUserInfo(name, about) {
+    return fetch(`${this._baseUrl}/users/me`, {
+      method: "PATCH",
+      headers: this._headers,
+      body: JSON.stringify({
+        name,
+        about,
+      }),
+    }).then((res) => {
+      if (res.ok) {
+        return res.json();
+      } else {
+        return Promise.reject(`Error: ${res.status}`);
+      }
+    });
+  }
 }

@@ -2,6 +2,7 @@ import "./index.css";
 import {
   enableValidation,
   resetValidation,
+  disableSubmitButton,
   settings,
 } from "../scripts/validation.js";
 
@@ -15,10 +16,12 @@ const api = new API({
   },
 });
 
+//Make GET requests to retrieve data upon page load
 api
   .getAppData()
   .then((data) => {
-    //data is an array with two elements. The first element is an array of cards
+    //data is an array with two elements that comes froms a Promise.all call that
+    // loads the initial data from the server. The first element is an array of cards
     //and the second element is the userInfo.
     const [cardData, userData] = data;
 
@@ -128,7 +131,7 @@ newPostForm.addEventListener("submit", handleAddCardSubmit);
 
 // Sets default values when the edit modal form is opened.
 function fillEditProfileForm() {
-  // Uses the text FROM the html elements as the default input values.
+  // Uses the current DOM values as the default input values.
   nameInput.value = profileName.textContent;
   descriptionInput.value = profileDescription.textContent;
 }
@@ -137,9 +140,15 @@ function fillEditProfileForm() {
 function handleEditProfileFormSubmit(event) {
   // Prevents the page from refreshing when the submit button is clicked
   event.preventDefault();
-  // Sets the new inputed values as the new text nodes in the DOM
-  profileName.textContent = nameInput.value;
-  profileDescription.textContent = descriptionInput.value;
+  api
+    .editUserInfo(nameInput.value, descriptionInput.value)
+    .then((data) => {
+      //If the promise resolves, the DOM updates with the new Values saved to the server
+      profileName.textContent = data.name;
+      profileDescription.textContent = data.about;
+    })
+    //Make a visible UX response later
+    .catch((error) => console.error(error));
   closeModal(editProfileModal);
   disableSubmitButton(editProfileSubmitBtn, settings);
 }
