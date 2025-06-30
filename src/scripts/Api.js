@@ -3,29 +3,21 @@ export default class API {
     this._baseUrl = options.baseUrl;
     this._headers = options.headers;
   }
+  //DRY
+  _handleResponse(res) {
+    return res.ok ? res.json() : Promise.reject(`Error: ${res.status}`);
+  }
 
   _getInitialCards() {
     return fetch(`${this._baseUrl}/cards`, {
       headers: this._headers,
-    }).then((res) => {
-      if (res.ok) {
-        return res.json();
-      } else {
-        return Promise.reject(`Error: ${res.status}`);
-      }
-    });
+    }).then(this._handleResponse);
   }
 
   _getUserInfo() {
     return fetch(`${this._baseUrl}/users/me`, {
       headers: this._headers,
-    }).then((res) => {
-      if (res.ok) {
-        return res.json();
-      } else {
-        return Promise.reject(`Error: ${res.status}`);
-      }
-    });
+    }).then(this._handleResponse);
   }
 
   getAppData() {
@@ -40,13 +32,7 @@ export default class API {
         name,
         about,
       }),
-    }).then((res) => {
-      if (res.ok) {
-        return res.json();
-      } else {
-        return Promise.reject(`Error: ${res.status}`);
-      }
-    });
+    }).then(this._handleResponse);
   }
 
   addNewCard({ name, link }) {
@@ -57,12 +43,6 @@ export default class API {
         name,
         link,
       }),
-    }).then((res) => {
-      if (res.ok) {
-        return res.json();
-      } else {
-        return Promise.reject(`Error: ${res.status}`);
-      }
-    });
+    }).then(this._handleResponse);
   }
 }
