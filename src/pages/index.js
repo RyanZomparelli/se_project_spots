@@ -8,34 +8,6 @@ import {
 
 import API from "../scripts/Api.js";
 
-const api = new API({
-  baseUrl: "https://around-api.en.tripleten-services.com/v1",
-  headers: {
-    authorization: "640264a7-d833-4076-a643-c71cc77da761",
-    "content-type": "application/json",
-  },
-});
-
-//Make GET requests to retrieve data upon page load
-api
-  .getAppData()
-  .then((data) => {
-    //data is an array with two elements that comes froms a Promise.all call that
-    // loads the initial data from the server. The first element is an array of cards
-    //and the second element is the userInfo.
-    const [cardData, userData] = data;
-
-    cardData.forEach((item) => {
-      const card = getCardElement(item);
-      cardsList.prepend(card);
-    });
-
-    profileAvatar.src = userData.avatar;
-    profileName.textContent = userData.name;
-    profileDescription.textContent = userData.about;
-  })
-  .catch((error) => console.error(error));
-
 // Selects Edit profile modal and buttons
 const editModalOpenBtn = document.querySelector(".profile__edit-button");
 const editProfileModal = document.querySelector("#edit-profile-modal");
@@ -69,12 +41,48 @@ const captionInput = newPostModal.querySelector("#caption-input");
 // Selects each form
 const editProfileForm = document.forms["edit-profile"];
 const newPostForm = document.forms["new-post"];
+const cardDeleteForm = document.forms["delete-card"];
 
 // Selects Preview modal elements
 const previewModal = document.querySelector("#preview-modal");
 const previewCloseBtn = previewModal.querySelector(".modal__button-close");
 const previewImage = previewModal.querySelector(".modal__img");
 const previewCaption = previewModal.querySelector(".modal__caption");
+
+//Selects delete modal and buttons
+const deleteCardModal = document.querySelector("#delete-card-modal");
+const deleteCardModalCloseBtn = deleteCardModal.querySelector(
+  ".modal__button-close"
+);
+const cancelBtn = deleteCardModal.querySelector("#cancel");
+
+const api = new API({
+  baseUrl: "https://around-api.en.tripleten-services.com/v1",
+  headers: {
+    authorization: "640264a7-d833-4076-a643-c71cc77da761",
+    "content-type": "application/json",
+  },
+});
+
+//Make GET requests to retrieve data upon page load
+api
+  .getAppData()
+  .then((data) => {
+    //data is an array with two elements that comes froms a Promise.all call that
+    // loads the initial data from the server. The first element is an array of cards
+    //and the second element is the userInfo.
+    const [cardData, userData] = data;
+
+    cardData.forEach((item) => {
+      const card = getCardElement(item);
+      cardsList.prepend(card);
+    });
+
+    profileAvatar.src = userData.avatar;
+    profileName.textContent = userData.name;
+    profileDescription.textContent = userData.about;
+  })
+  .catch((error) => console.error(error));
 
 enableValidation(settings);
 
@@ -108,9 +116,14 @@ function handleKeyDown(e) {
 const modalList = document.querySelectorAll(".modal");
 modalList.forEach((modal) => handleClickToClose(modal));
 
-// New post open and close event listeners
+// New post open event listener
 newPostOpenBtn.addEventListener("click", () => openModal(newPostModal));
-newPostCloseBtn.addEventListener("click", () => closeModal(newPostModal));
+// Edit Profile open event listener
+editModalOpenBtn.addEventListener("click", function () {
+  openModal(editProfileModal);
+  resetValidation(editProfileForm, [nameInput, descriptionInput], settings);
+  fillEditProfileForm();
+});
 
 // New post submisson handler
 function handleAddCardSubmit(evt) {
@@ -143,9 +156,9 @@ function fillEditProfileForm() {
 }
 
 // Edit Profile submission handler
-function handleEditProfileFormSubmit(event) {
+function handleEditProfileFormSubmit(e) {
   // Prevents the page from refreshing when the submit button is clicked
-  event.preventDefault();
+  e.preventDefault();
   const inputData = {
     name: nameInput.value,
     about: descriptionInput.value,
@@ -163,18 +176,43 @@ function handleEditProfileFormSubmit(event) {
     .catch((error) => console.error(error));
 }
 
-// Edit Profile open/close event listeners
-editModalOpenBtn.addEventListener("click", function () {
-  openModal(editProfileModal);
-  resetValidation(editProfileForm, [nameInput, descriptionInput], settings);
-  fillEditProfileForm();
-});
-
+//Close button listeners
 editModalCloseBtn.addEventListener("click", () => closeModal(editProfileModal));
+newPostCloseBtn.addEventListener("click", () => closeModal(newPostModal));
 previewCloseBtn.addEventListener("click", () => closeModal(previewModal));
+deleteCardModalCloseBtn.addEventListener("click", () =>
+  closeModal(deleteCardModal)
+);
+cancelBtn.addEventListener("click", () => closeModal(deleteCardModal));
 
 // Edit Profile submit listener
 editProfileForm.addEventListener("submit", handleEditProfileFormSubmit);
+
+//Delete card handler
+let selectedCard;
+let selectedCardId;
+
+function handleDeleteCard(cardELement, data) {
+  selectedCard = cardELement;
+  selectedCardId = data._id;
+  openModal(deleteCardModal);
+}
+
+function handleDeleteCardSubmit(selectedCard, selectedCardId) {
+  api
+    .removeCard(selectedCardId)
+    .then(() => {
+      selectedCard.remove();
+      closeModal(deleteCardModal);
+    })
+    .catch((error) => console.error(error));
+}
+
+cardDeleteForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+  console.log(selectedCardId);
+  handleDeleteCardSubmit(selectedCard, selectedCardId);
+});
 
 // Creates cards
 function getCardElement(data) {
@@ -200,7 +238,9 @@ function getCardElement(data) {
   );
 
   const cardDeleteBtn = cardElement.querySelector(".card__delete-button");
-  cardDeleteBtn.addEventListener("click", () => cardElement.remove());
+  cardDeleteBtn.addEventListener("click", () => {
+    handleDeleteCard(cardElement, data);
+  });
 
   cardElement.addEventListener("click", function (evt) {
     if (evt.target === cardImage) {
