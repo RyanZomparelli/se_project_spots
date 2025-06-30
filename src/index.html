@@ -27,7 +27,7 @@
   <body>
     <div class="page">
       <header class="header">
-        <!-- One way to render images outside of css. See index.js to see another method -->
+        <!-- One way to render images outside of css. -->
         <img
           src="<%= require('./images/logo.svg') %>"
           alt="Spots logo."
@@ -37,15 +37,14 @@
 
       <main class="content">
         <section class="profile page__section">
-          <!-- Rendered through JS -->
           <img
             id="profile-avatar"
             alt="Profile picture."
             class="profile__image"
           />
           <div class="profile__content">
-            <h1 class="profile__name">Bessie Coleman</h1>
-            <p class="profile__description">Civil Aviator</p>
+            <h1 class="profile__name"></h1>
+            <p class="profile__description"></p>
             <button class="profile__edit-button" type="button">
               <img
                 src="<%= require('./images/pencil.svg') %>"

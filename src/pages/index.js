@@ -128,6 +128,7 @@ function handleAddCardSubmit(evt) {
       closeModal(newPostModal);
       disableSubmitButton(newPostSubmitBtn, settings);
     })
+    // figure out how to make an error message appear in the form
     .catch((error) => console.error(error));
 }
 
