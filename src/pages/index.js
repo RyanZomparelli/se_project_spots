@@ -72,7 +72,6 @@ api
     // loads the initial data from the server. The first element is an array of cards
     //and the second element is the userInfo.
     const [cardData, userData] = data;
-
     cardData.forEach((item) => {
       const card = getCardElement(item);
       cardsList.prepend(card);
@@ -208,9 +207,16 @@ function handleDeleteCardSubmit(selectedCard, selectedCardId) {
     .catch((error) => console.error(error));
 }
 
+const handleCardLikes = (isLiked, cardLikeBtn) => {
+  if (isLiked) {
+    cardLikeBtn.classList.add("card__like-button_active");
+  } else {
+    cardLikeBtn.classList.remove("card__like-button_active");
+  }
+};
+
 cardDeleteForm.addEventListener("submit", (e) => {
   e.preventDefault();
-  console.log(selectedCardId);
   handleDeleteCardSubmit(selectedCard, selectedCardId);
 });
 
@@ -233,9 +239,27 @@ function getCardElement(data) {
 
   // Makes sure every card thats created has like button and delete button functionality
   const cardLikeBtn = cardElement.querySelector(".card__like-button");
-  cardLikeBtn.addEventListener("click", () =>
-    cardLikeBtn.classList.toggle("card__like-button_active")
-  );
+
+  //!!Set the inital visual state of the buttons upon loading
+  handleCardLikes(data.isLiked, cardLikeBtn);
+
+  cardLikeBtn.addEventListener("click", () => {
+    if (cardLikeBtn.classList.contains("card__like-button_active")) {
+      api
+        .removeLike(data._id)
+        .then((updated) => {
+          handleCardLikes(updated.isLiked, cardLikeBtn);
+        })
+        .catch((error) => console.error(error));
+    } else {
+      api
+        .addLike(data._id)
+        .then((updated) => {
+          handleCardLikes(updated.isLiked, cardLikeBtn);
+        })
+        .catch((error) => console.error(error));
+    }
+  });
 
   const cardDeleteBtn = cardElement.querySelector(".card__delete-button");
   cardDeleteBtn.addEventListener("click", () => {
