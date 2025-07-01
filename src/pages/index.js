@@ -27,7 +27,9 @@ const newPostOpenBtn = document.querySelector(".profile__button-add");
 const newPostCloseBtn = newPostModal.querySelector(".modal__button-close");
 const newPostSubmitBtn = newPostModal.querySelector(".modal__button-submit");
 
-// Selects profile text nodes and profile input values
+// Selects profile section elements
+const editAvatarOpenBtn = document.querySelector(".profile__avatar-button");
+const editAvatarModal = document.querySelector("#avatar-modal");
 const profileAvatar = document.getElementById("profile-avatar");
 const profileName = document.querySelector(".profile__name");
 const nameInput = editProfileModal.querySelector("#name-input");
@@ -175,6 +177,13 @@ function handleEditProfileFormSubmit(e) {
     .catch((error) => console.error(error));
 }
 
+// Edit Profile submit listener
+editProfileForm.addEventListener("submit", handleEditProfileFormSubmit);
+
+editAvatarOpenBtn.addEventListener("click", () => {
+  openModal(editAvatarModal);
+});
+
 //Close button listeners
 editModalCloseBtn.addEventListener("click", () => closeModal(editProfileModal));
 newPostCloseBtn.addEventListener("click", () => closeModal(newPostModal));
@@ -183,9 +192,6 @@ deleteCardModalCloseBtn.addEventListener("click", () =>
   closeModal(deleteCardModal)
 );
 cancelBtn.addEventListener("click", () => closeModal(deleteCardModal));
-
-// Edit Profile submit listener
-editProfileForm.addEventListener("submit", handleEditProfileFormSubmit);
 
 //Delete card handler
 let selectedCard;
