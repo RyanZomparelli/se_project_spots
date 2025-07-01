@@ -269,4 +269,18 @@
   .modal__img {
     max-width: unset;
   }
+
+  .modal__buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .modal__button_type_cancel {
+    width: 156px;
+  }
+
+  .modal__button_type_delete {
+    width: 156px;
+  }
 }

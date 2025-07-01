@@ -37,11 +37,19 @@
 
       <main class="content">
         <section class="profile page__section">
+          <div class="profile__avatar-overlay">
+          <button class="profile__avatar-button" type="button">
+            <img
+            src="<%= require('./images/white_pencil_nb.svg') %>"
+            alt="edit pencil"
+            class="profile__avatar-icon">
+          </button>
           <img
             id="profile-avatar"
             alt="Profile picture."
             class="profile__image"
           />
+          </div>
           <div class="profile__content">
             <h1 class="profile__name"></h1>
             <p class="profile__description"></p>
