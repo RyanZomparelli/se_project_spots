@@ -30,6 +30,13 @@ const newPostSubmitBtn = newPostModal.querySelector(".modal__button-submit");
 // Selects profile section elements
 const editAvatarOpenBtn = document.querySelector(".profile__avatar-button");
 const editAvatarModal = document.querySelector("#avatar-modal");
+const editAvatarCloseBtn = editAvatarModal.querySelector(
+  ".modal__button-close"
+);
+const avatarInput = editAvatarModal.querySelector("#image-input");
+const editAvatarSubmitBtn = editAvatarModal.querySelector(
+  ".modal__button-submit"
+);
 const profileAvatar = document.getElementById("profile-avatar");
 const profileName = document.querySelector(".profile__name");
 const nameInput = editProfileModal.querySelector("#name-input");
@@ -44,6 +51,7 @@ const captionInput = newPostModal.querySelector("#caption-input");
 const editProfileForm = document.forms["edit-profile"];
 const newPostForm = document.forms["new-post"];
 const cardDeleteForm = document.forms["delete-card"];
+const newAvatarForm = document.forms["new-avatar"];
 
 // Selects Preview modal elements
 const previewModal = document.querySelector("#preview-modal");
@@ -57,6 +65,7 @@ const deleteCardModalCloseBtn = deleteCardModal.querySelector(
   ".modal__button-close"
 );
 const cancelBtn = deleteCardModal.querySelector("#cancel");
+const deleteSubmitBtn = deleteCardModal.querySelector(".modal__button-submit");
 
 const api = new API({
   baseUrl: "https://around-api.en.tripleten-services.com/v1",
@@ -118,9 +127,13 @@ const modalList = document.querySelectorAll(".modal");
 modalList.forEach((modal) => handleClickToClose(modal));
 
 // New post open event listener
-newPostOpenBtn.addEventListener("click", () => openModal(newPostModal));
+newPostOpenBtn.addEventListener("click", () => {
+  handleSubmitBtnUI(newPostSubmitBtn);
+  openModal(newPostModal);
+});
 // Edit Profile open event listener
 editModalOpenBtn.addEventListener("click", function () {
+  handleSubmitBtnUI(editProfileSubmitBtn);
   openModal(editProfileModal);
   resetValidation(editProfileForm, [nameInput, descriptionInput], settings);
   fillEditProfileForm();
@@ -136,6 +149,7 @@ function handleAddCardSubmit(evt) {
   api
     .addNewCard(inputData)
     .then((data) => {
+      handleSubmitBtnUI(newPostSubmitBtn);
       const card = getCardElement(data);
       cardsList.prepend(card);
       newPostForm.reset();
@@ -167,6 +181,7 @@ function handleEditProfileFormSubmit(e) {
   api
     .editUserInfo(inputData)
     .then((data) => {
+      handleSubmitBtnUI(editProfileSubmitBtn);
       //If the promise resolves, the DOM updates with the new Values saved to the server
       profileName.textContent = data.name;
       profileDescription.textContent = data.about;
@@ -180,10 +195,6 @@ function handleEditProfileFormSubmit(e) {
 // Edit Profile submit listener
 editProfileForm.addEventListener("submit", handleEditProfileFormSubmit);
 
-editAvatarOpenBtn.addEventListener("click", () => {
-  openModal(editAvatarModal);
-});
-
 //Close button listeners
 editModalCloseBtn.addEventListener("click", () => closeModal(editProfileModal));
 newPostCloseBtn.addEventListener("click", () => closeModal(newPostModal));
@@ -192,39 +203,68 @@ deleteCardModalCloseBtn.addEventListener("click", () =>
   closeModal(deleteCardModal)
 );
 cancelBtn.addEventListener("click", () => closeModal(deleteCardModal));
+editAvatarCloseBtn.addEventListener("click", () => closeModal(editAvatarModal));
 
 //Delete card handler
 let selectedCard;
 let selectedCardId;
-
 function handleDeleteCard(cardELement, data) {
   selectedCard = cardELement;
   selectedCardId = data._id;
+  deleteSubmitBtn.textContent = "Delete";
   openModal(deleteCardModal);
 }
-
 function handleDeleteCardSubmit(selectedCard, selectedCardId) {
   api
     .removeCard(selectedCardId)
     .then(() => {
+      deleteSubmitBtn.textContent = "Deleting";
       selectedCard.remove();
       closeModal(deleteCardModal);
     })
     .catch((error) => console.error(error));
 }
-
-const handleCardLikes = (isLiked, cardLikeBtn) => {
-  if (isLiked) {
-    cardLikeBtn.classList.add("card__like-button_active");
-  } else {
-    cardLikeBtn.classList.remove("card__like-button_active");
-  }
-};
-
 cardDeleteForm.addEventListener("submit", (e) => {
   e.preventDefault();
   handleDeleteCardSubmit(selectedCard, selectedCardId);
 });
+
+function handleSubmitBtnUI(btn) {
+  if (btn.disabled === true) {
+    btn.textContent = "Save";
+  } else {
+    btn.textContent = "Saving";
+  }
+}
+
+//edit avatar
+editAvatarOpenBtn.addEventListener("click", (e) => {
+  handleSubmitBtnUI(editAvatarSubmitBtn);
+  openModal(editAvatarModal);
+});
+
+function handleNewAvatarSubmit() {
+  api
+    .editAvatar(avatarInput.value)
+    .then((data) => {
+      handleSubmitBtnUI(editAvatarSubmitBtn);
+      profileAvatar.src = data.avatar;
+      closeModal(editAvatarModal);
+      disableSubmitButton(editAvatarSubmitBtn, settings);
+    })
+    .catch((error) => console.error(error));
+}
+
+newAvatarForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+  handleNewAvatarSubmit();
+});
+
+const handleCardLikes = (isLiked, cardLikeBtn) => {
+  isLiked
+    ? cardLikeBtn.classList.add("card__like-button_active")
+    : cardLikeBtn.classList.remove("card__like-button_active");
+};
 
 // Creates cards
 function getCardElement(data) {
@@ -246,13 +286,14 @@ function getCardElement(data) {
   // Makes sure every card thats created has like button and delete button functionality
   const cardLikeBtn = cardElement.querySelector(".card__like-button");
 
-  //!!Set the inital visual state of the buttons upon loading
+  //!!Set the inital visual state of the buttons upon loading or the UI won't save
   handleCardLikes(data.isLiked, cardLikeBtn);
 
   cardLikeBtn.addEventListener("click", () => {
     if (cardLikeBtn.classList.contains("card__like-button_active")) {
       api
         .removeLike(data._id)
+        //Use the returned data to update the UI
         .then((updated) => {
           handleCardLikes(updated.isLiked, cardLikeBtn);
         })
