@@ -85,7 +85,7 @@ api
     const [cardData, userData] = data;
     cardData.forEach((item) => {
       const card = getCardElement(item);
-      cardsList.prepend(card);
+      cardsList.append(card);
     });
 
     profileAvatar.src = userData.avatar;
