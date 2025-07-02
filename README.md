@@ -51,7 +51,11 @@ Spots is bundled, built and deployed with webpack, using a series of loaders, pl
 
 **OOP**
 
-This project represents the culmination of my studies in object-oriented programming and JavaScript modules to date. All API interactions stem from methods of an API class I created using JavaScript class syntax, which is then instantiated in index.js and uses a chain of async operations to handle UI interactions.
+While this project leverages JavaScript modules and includes a dedicated custom `Api` class, most of the logic still resides in `index.js`. In the future, I plan to refactor this file and break the logic into smaller, decoupled, and reusable classes. This would significantly improve readability, scalability, and long-term maintainability.
+
+If you'd like to see a more fully modular and class-based implementation, check out my [Todo App repository](https://github.com/RyanZomparelli/se_project_todo-app), which better reflects the culmination of my current studies in object-oriented programming and modular design.
+
+For now, all API interactions in Spots stem from methods of the `Api` class. This class is instantiated in `index.js` and used throughout the app in a series of asynchronous calls to manage UI interactions and persist data with the backend.
 
 **API interactions**
 

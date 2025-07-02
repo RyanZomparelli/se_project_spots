@@ -118,11 +118,16 @@ const handleCardLikes = (isLiked, cardLikeBtn) => {
     : cardLikeBtn.classList.remove("card__like-button_active");
 };
 
-function handleSubmitBtnUI(btn) {
-  if (btn.disabled === true) {
-    btn.textContent = "Save";
+function handleSubmitBtnUI(
+  btn,
+  isLoading,
+  defaultValue = "Save",
+  isLoadingValue = "Saving"
+) {
+  if (isLoading) {
+    btn.textContent = isLoadingValue;
   } else {
-    btn.textContent = "Saving";
+    btn.textContent = defaultValue;
   }
 }
 
@@ -130,7 +135,6 @@ function handleSubmitBtnUI(btn) {
 function handleDeleteCard(cardELement, data) {
   selectedCard = cardELement;
   selectedCardId = data._id;
-  deleteSubmitBtn.textContent = "Delete";
   openModal(deleteCardModal);
 }
 
@@ -197,29 +201,41 @@ function getCardElement(data) {
 //FORM SUBMISSION HANDLERS
 
 function handleDeleteCardSubmit(selectedCard, selectedCardId) {
+  handleSubmitBtnUI(deleteSubmitBtn, true, "Delete", "Deleting");
   api
     .removeCard(selectedCardId)
     .then(() => {
-      deleteSubmitBtn.textContent = "Deleting";
       selectedCard.remove();
       closeModal(deleteCardModal);
     })
-    .catch((error) => console.error(error));
+    .catch((error) => console.error(error))
+    .finally(() => {
+      //Wrap UI function in async operation to prevent rapid flashing of UI states
+      setTimeout(() => {
+        handleSubmitBtnUI(deleteSubmitBtn, false, "Delete", "Deleting");
+      }, 1000);
+    });
 }
 
 function handleNewAvatarSubmit() {
+  handleSubmitBtnUI(editAvatarSubmitBtn, true);
   api
     .editAvatar(avatarInput.value)
     .then((data) => {
-      handleSubmitBtnUI(editAvatarSubmitBtn);
       profileAvatar.src = data.avatar;
       closeModal(editAvatarModal);
       disableSubmitButton(editAvatarSubmitBtn, settings);
     })
-    .catch((error) => console.error(error));
+    .catch((error) => console.error(error))
+    .finally(() => {
+      setTimeout(() => {
+        handleSubmitBtnUI(editAvatarSubmitBtn, false);
+      }, 1000);
+    });
 }
 
 function handleEditProfileFormSubmit(e) {
+  handleSubmitBtnUI(editProfileSubmitBtn, true);
   // Prevents the page from refreshing when the submit button is clicked
   e.preventDefault();
   const inputData = {
@@ -229,7 +245,6 @@ function handleEditProfileFormSubmit(e) {
   api
     .editUserInfo(inputData)
     .then((data) => {
-      handleSubmitBtnUI(editProfileSubmitBtn);
       //If the promise resolves, the DOM updates with the new Values saved to the server
       profileName.textContent = data.name;
       profileDescription.textContent = data.about;
@@ -237,11 +252,17 @@ function handleEditProfileFormSubmit(e) {
       disableSubmitButton(editProfileSubmitBtn, settings);
     })
     //Make a visible UX response later
-    .catch((error) => console.error(error));
+    .catch((error) => console.error(error))
+    .finally(() => {
+      setTimeout(() => {
+        handleSubmitBtnUI(editProfileSubmitBtn, false);
+      }, 1000);
+    });
 }
 
 // New post submisson handler
 function handleAddCardSubmit(evt) {
+  handleSubmitBtnUI(newPostSubmitBtn, true);
   evt.preventDefault();
   const inputData = {
     name: captionInput.value,
@@ -250,7 +271,6 @@ function handleAddCardSubmit(evt) {
   api
     .addNewCard(inputData)
     .then((data) => {
-      handleSubmitBtnUI(newPostSubmitBtn);
       const card = getCardElement(data);
       cardsList.prepend(card);
       newPostForm.reset();
@@ -258,7 +278,12 @@ function handleAddCardSubmit(evt) {
       disableSubmitButton(newPostSubmitBtn, settings);
     })
     // figure out how to make an error message appear in the form
-    .catch((error) => console.error(error));
+    .catch((error) => console.error(error))
+    .finally(() => {
+      setTimeout(() => {
+        handleSubmitBtnUI(newPostSubmitBtn, false);
+      }, 1000);
+    });
 }
 
 //FLOW
@@ -295,13 +320,11 @@ enableValidation(settings);
 // Open button listeners
 
 editAvatarOpenBtn.addEventListener("click", (e) => {
-  handleSubmitBtnUI(editAvatarSubmitBtn);
   openModal(editAvatarModal);
 });
 
 // Edit Profile open event listener
 editModalOpenBtn.addEventListener("click", function () {
-  handleSubmitBtnUI(editProfileSubmitBtn);
   openModal(editProfileModal);
   resetValidation(editProfileForm, [nameInput, descriptionInput], settings);
   fillEditProfileForm();
@@ -309,7 +332,6 @@ editModalOpenBtn.addEventListener("click", function () {
 
 // New post open event listener
 newPostOpenBtn.addEventListener("click", () => {
-  handleSubmitBtnUI(newPostSubmitBtn);
   openModal(newPostModal);
 });
 
