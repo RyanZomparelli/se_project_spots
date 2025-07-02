@@ -4,7 +4,7 @@ Spots is a photo-sharing social media web app featuring responsive design, dynam
 
 **Check out Spots** [here](https://ryanzomparelli.github.io/se_project_spots/)
 
-**Watch a brief video overview** [here](https://drive.google.com/file/d/13w7uFwlzL-z5HIjMBbJHGKxwVurm0Lfc/view?usp=sharing)
+**Video presentation in less than 5 minutes** [here](https://www.loom.com/share/67fdc263fdad4a6c9333c0c874c6e111)
 
 ## Table of Contents
 
@@ -84,8 +84,6 @@ For Example:
 ```js
 const inputError = formEl.querySelector(`.${inputEl.id}-error`);
 ```
-
-The validation.js file is designed to be flexible and reusable, with no hardcoded values or variables. It will automatically support new forms and inputs without requiring any updates or changes to the code.
 
 Check out the validation.js file to see how I utilized a modular format with reusable functions for form validation. You can also experiment with the modals yourself by clicking the 'Spots' link at the top of the README.
 
