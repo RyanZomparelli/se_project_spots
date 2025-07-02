@@ -219,12 +219,13 @@ function handleDeleteCardSubmit(selectedCard, selectedCardId) {
 
 function handleNewAvatarSubmit() {
   handleSubmitBtnUI(editAvatarSubmitBtn, true);
+  disableSubmitButton(editAvatarSubmitBtn, settings);
   api
     .editAvatar(avatarInput.value)
     .then((data) => {
       profileAvatar.src = data.avatar;
       closeModal(editAvatarModal);
-      disableSubmitButton(editAvatarSubmitBtn, settings);
+      newAvatarForm.reset();
     })
     .catch((error) => console.error(error))
     .finally(() => {
@@ -236,6 +237,7 @@ function handleNewAvatarSubmit() {
 
 function handleEditProfileFormSubmit(e) {
   handleSubmitBtnUI(editProfileSubmitBtn, true);
+  disableSubmitButton(editProfileSubmitBtn, settings);
   // Prevents the page from refreshing when the submit button is clicked
   e.preventDefault();
   const inputData = {
@@ -249,7 +251,6 @@ function handleEditProfileFormSubmit(e) {
       profileName.textContent = data.name;
       profileDescription.textContent = data.about;
       closeModal(editProfileModal);
-      disableSubmitButton(editProfileSubmitBtn, settings);
     })
     //Make a visible UX response later
     .catch((error) => console.error(error))
@@ -263,6 +264,7 @@ function handleEditProfileFormSubmit(e) {
 // New post submisson handler
 function handleAddCardSubmit(evt) {
   handleSubmitBtnUI(newPostSubmitBtn, true);
+  disableSubmitButton(newPostSubmitBtn, settings);
   evt.preventDefault();
   const inputData = {
     name: captionInput.value,
@@ -275,7 +277,6 @@ function handleAddCardSubmit(evt) {
       cardsList.prepend(card);
       newPostForm.reset();
       closeModal(newPostModal);
-      disableSubmitButton(newPostSubmitBtn, settings);
     })
     // figure out how to make an error message appear in the form
     .catch((error) => console.error(error))
